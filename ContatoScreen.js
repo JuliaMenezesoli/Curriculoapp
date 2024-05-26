@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 export default function ContatoScreen() {
   return (
     <View style={styles.container}>
-      <Text>Contato</Text>
+      <Text> GitHub: https://github.com/JuliaMenezesoli; linkedin: https://www.linkedin.com/in/j%C3%BAlia-menezes-539575193/</Text>
     </View>
   );
 }

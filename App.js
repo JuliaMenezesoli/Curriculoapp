@@ -40,7 +40,7 @@ function HomeScreen({ navigation }) {
 function DetailsScreen() {
   return (
     <View style={styles.container}>
-      <Text>Detalhes da Júlia Menezes</Text>
+      <Text>Tenho 23 anos e no momento sou estudante do curso de Análise e desenvolvimento de sistemas no SENAC, meus hobbies são ouvir música, tocar violão e ler livros.</Text>
     </View>
   );
 }

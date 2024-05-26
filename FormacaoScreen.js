@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 export default function FormacaoScreen() {
   return (
     <View style={styles.container}>
-      <Text>Tela de Formação</Text>
+      <Text>Graduada em Gestão de Turismo pela Instituto Federal de Pernambuco e no momento graduanda de Análise e desenvolvimentode sistemas pelo SENAC</Text>
     </View>
   );
 }
