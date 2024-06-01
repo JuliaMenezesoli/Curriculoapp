@@ -1,12 +1,15 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import ContatoScreen from './ContatoScreen'; // Certifique-se de que o caminho está correto
-import ExperienciaScreen from './ExperienciaScreen'; // Certifique-se de que o caminho está correto
-import FormacaoScreen from './FormacaoScreen'; // Certifique-se de que o caminho está correto
+import MapView, { Marker } from 'react-native-maps';
+import * as Location from 'expo-location'; 
+
+import ContatoScreen from './ContatoScreen'; 
+import ExperienciaScreen from './ExperienciaScreen'; 
+import FormacaoScreen from './FormacaoScreen'; 
 
 function HomeScreen({ navigation }) {
   return (
@@ -38,9 +41,48 @@ function HomeScreen({ navigation }) {
 }
 
 function DetailsScreen() {
+  const [location, setLocation] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permissão para acessar a localização foi negada');
+        return;
+      }
+
+      let userLocation = await Location.getCurrentPositionAsync({});
+      setLocation({
+        latitude: userLocation.coords.latitude,
+        longitude: userLocation.coords.longitude,
+      });
+    })();
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text>Tenho 23 anos e no momento sou estudante do curso de Análise e desenvolvimento de sistemas no SENAC, meus hobbies são ouvir música, tocar violão e ler livros.</Text>
+      <View style={styles.mapContainer}>
+        {location && (
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: location.latitude,
+              longitude: location.longitude,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+          >
+            <Marker
+              coordinate={{
+                latitude: location.latitude,
+                longitude: location.longitude,
+              }}
+              title="Sua Localização"
+            />
+          </MapView>
+        )}
+      </View>
     </View>
   );
 }
@@ -64,11 +106,24 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  mapContainer: {
+    flex: 1,
+    width: '95%',
+    alignSelf: 'center',
+    marginTop: 20,
+  },
+  map: {
+    flex: 1,
+    width: '100%',
+    borderRadius: 10,
+  },
 });
+
+
+
 
 
 
